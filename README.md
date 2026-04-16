@@ -34,7 +34,7 @@
 ---
 
 <div align="center">
-  <img src="./" alt="Banner Clientes" width="600px">
+  <img src="./Produtos.png" alt="Banner Clientes" width="600px">
 </div>
 
 ---
