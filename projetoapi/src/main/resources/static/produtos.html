@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos API · Painel Administrativo</title>
+    <!-- Font Awesome 6 (ícones profissionais) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter (moderna e legível) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="produtos.css">
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- Barra lateral decorativa / background abstrato (nível profissional) -->
+    <div class="glass-background"></div>
+
+    <!-- Conteúdo principal -->
+    <main class="dashboard">
+        <!-- Cabeçalho -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="title-section">
+                    <div class="icon-badge">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h1>Gestão de <span>Produtos</span></h1>
+                </div>
+                <div class="stats-chip">
+                    <i class="fas fa-database"></i>
+                    <span id="total-produtos">0</span> itens
+                </div>
+            </div>
+            <p class="header-sub">Adicione, edite ou remova produtos do catálogo</p>
+        </header>
+
+        <!-- Container do formulário (cartão) -->
+        <section class="form-card card-elevation">
+            <div class="card-header">
+                <h2 id="form-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Novo Produto
+                </h2>
+                <button class="btn-icon" id="clear-form-btn" title="Limpar formulário">
+                    <i class="fas fa-eraser"></i>
+                </button>
+            </div>
+            <form id="produto-form">
+                <input type="hidden" id="produto-id">
+
+                <div class="form-grid">
+                    <div class="input-field">
+                        <label for="nome">
+                            <i class="fas fa-tag"></i> Nome
+                        </label>
+                        <input type="text" id="nome" name="nome" placeholder="Ex: Notebook Gamer" required autocomplete="off">
+                        <div class="field-highlight"></div>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="preco">
+                            <i class="fas fa-dollar-sign"></i> Preço (R$)
+                        </label>
+                        <input type="number" id="preco" name="preco" step="0.01" min="0.01" placeholder="0.00" required>
+                        <div class="field-highlight"></div>
+                    </div>
+
+                    <div class="input-field full-width">
+                        <label for="descricao">
+                            <i class="fas fa-align-left"></i> Descrição
+                        </label>
+                        <textarea id="descricao" name="descricao" rows="3" placeholder="Descreva o produto..."></textarea>
+                        <div class="field-highlight"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary" id="submit-btn">
+                        <i class="fas fa-save"></i>
+                        <span>Salvar Produto</span>
+                    </button>
+                    <button type="button" class="btn-secondary" id="cancel-edit-btn" style="display: none;">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Seção de listagem -->
+        <section class="list-card card-elevation">
+            <div class="card-header">
+                <h2>
+                    <i class="fas fa-list-ul"></i>
+                    Catálogo de Produtos
+                </h2>
+                <button class="btn-outline" id="refresh-btn" title="Atualizar lista">
+                    <i class="fas fa-sync-alt"></i> Atualizar
+                </button>
+            </div>
+
+            <!-- Área de notificações (toast-like) -->
+            <div id="notification-area" class="notification-container"></div>
+
+            <!-- Loader -->
+            <div id="loader" class="loader-wrapper">
+                <div class="spinner"></div>
+                <p>Carregando produtos...</p>
+            </div>
+
+            <!-- Tabela responsiva -->
+            <div class="table-responsive" id="table-container" style="display: none;">
+                <table class="produtos-table">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody id="produtos-tbody">
+                    <!-- Linhas inseridas via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Estado vazio -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <i class="fas fa-box-open"></i>
+                <h3>Nenhum produto encontrado</h3>
+                <p>Clique em "Novo Produto" para adicionar o primeiro item.</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal de confirmação (delete) customizado -->
+<div id="delete-modal" class="modal-overlay">
+    <div class="modal-card">
+        <div class="modal-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3>Confirmar exclusão</h3>
+        <p>Tem certeza que deseja remover <strong id="modal-produto-nome"></strong>?</p>
+        <p class="modal-warning">Esta ação não pode ser desfeita.</p>
+        <div class="modal-actions">
+            <button class="btn-secondary" id="modal-cancel">
+                <i class="fas fa-chevron-left"></i> Cancelar
+            </button>
+            <button class="btn-danger" id="modal-confirm">
+                <i class="fas fa-trash-alt"></i> Excluir
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="produtos.js"></script>
+</body>
+</html>
