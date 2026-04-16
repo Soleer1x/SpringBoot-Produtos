@@ -4,11 +4,11 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/produtos_db?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
-    password: univille
+    password: Semsenha1877@
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
